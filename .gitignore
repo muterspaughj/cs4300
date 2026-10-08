@@ -1,0 +1,28 @@
+# Python virtual environments
+.venv/
+venv/
+myenv/
+
+# Python cache
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Django
+db.sqlite3
+*.log
+
+# Environment variables
+.env
+
+# macOS
+.DS_Store
+
+# IDE files
+.vscode/
+.idea/
+
+# Local submission archives
+*.zip
