@@ -1,0 +1,154 @@
+
+{% extends 'bookings/base.html' %}
+
+{% block title %}Book Seats | CinemaBooking{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Center the booking area */
+    .booking-container {
+        max-width: 800px;
+        margin: auto;
+    }
+
+    /* Style the theater screen */
+    .screen {
+        background: linear-gradient(180deg, #38bdf8, #1e293b);
+        height: 12px;
+        border-radius: 50% 50% 0 0;
+        box-shadow: 0 12px 25px rgba(56, 189, 248, 0.2);
+        margin-bottom: 45px;
+    }
+
+    /* Arrange seats in a grid */
+    .seat-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 12px;
+        max-width: 450px;
+        margin: auto;
+    }
+
+    /* Position each seat */
+    .seat-option {
+        position: relative;
+    }
+
+    /* Hide the default radio buttons */
+    .seat-option input {
+        position: absolute;
+        opacity: 0;
+        width: 1px;
+        height: 1px;
+    }
+
+    /* Style available seats */
+    .seat-label {
+        display: block;
+        padding: 15px 5px;
+        text-align: center;
+        border-radius: 8px 8px 4px 4px;
+        background-color: #334155;
+        color: white;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    /* Highlight the selected seat */
+    .seat-option input:checked + .seat-label {
+        background-color: #0284c7;
+    }
+
+    /* Show keyboard focus */
+    .seat-option input:focus-visible + .seat-label {
+        outline: 3px solid #7dd3fc;
+        outline-offset: 3px;
+    }
+
+    /* Mark booked seats in red */
+    .seat-option input:disabled + .seat-label {
+        background-color: #7f1d1d;
+        cursor: not-allowed;
+        opacity: 0.65;
+    }
+
+    /* Highlight available seats on hover */
+    .seat-label:hover {
+        background-color: #0369a1;
+    }
+
+    /* Keep booked seats red on hover */
+    .seat-option input:disabled + .seat-label:hover {
+        background-color: #7f1d1d;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="booking-container">
+
+    <!-- Display the selected movie -->
+    <div class="text-center mb-5">
+        <h1 class="fw-bold">{{ movie.title }}</h1>
+        <p class="text-light opacity-75">
+            Select your preferred seat
+        </p>
+    </div>
+
+    <!-- Theater screen -->
+    <div class="screen"></div>
+    <p class="text-center text-light mb-5">SCREEN</p>
+
+    <!-- Seat booking form -->
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- Display all theater seats -->
+        <div class="seat-grid mb-5">
+            {% for seat in seats %}
+            <div class="seat-option">
+                <input
+                    type="radio"
+                    name="seat_id"
+                    id="seat-{{ seat.id }}"
+                    value="{{ seat.id }}"
+                    {% if seat.booked %}disabled{% endif %}
+                    required
+                >
+
+                <!-- Display the seat number -->
+                <label class="seat-label"
+                       for="seat-{{ seat.id }}">
+                    {{ seat.number }}
+                </label>
+            </div>
+            {% empty %}
+            <p class="text-light">
+                No seats are configured yet.
+            </p>
+            {% endfor %}
+        </div>
+
+        <!-- Explain seat colors -->
+        <div class="d-flex justify-content-center gap-4 mb-4">
+            <span class="text-light">⬛ Available</span>
+            <span class="text-info">■ Selected</span>
+            <span class="text-danger">■ Reserved</span>
+        </div>
+
+        <!-- Submit the selected seat -->
+        <button type="submit"
+                class="btn btn-primary btn-lg w-100"
+                {% if not seats %}disabled{% endif %}>
+            Confirm Booking
+        </button>
+    </form>
+
+    <!-- Return to the movie list -->
+    <a href="{% url 'movie_list' %}"
+       class="btn btn-outline-light w-100 mt-3">
+        Back to Movies
+    </a>
+
+</div>
+{% endblock %}

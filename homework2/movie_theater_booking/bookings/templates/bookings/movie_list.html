@@ -1,0 +1,64 @@
+
+{% extends 'bookings/base.html' %}
+
+{% block title %}Now Showing | CinemaBooking{% endblock %}
+
+{% block content %}
+
+<div class="mb-5">
+    <h1 class="display-5 fw-bold">Now Showing</h1>
+    <p class="text-secondary">
+        Explore our movies and reserve your favorite seats.
+    </p>
+</div>
+
+<div class="row g-4">
+    {% for movie in movies %}
+    <div class="col-md-6 col-lg-4">
+        <div class="movie-card p-4 d-flex flex-column">
+
+            <div class="mb-3">
+                <span class="badge bg-primary">Now Showing</span>
+            </div>
+
+            <h3 class="fw-bold text-white">
+                {{ movie.title }}
+            </h3>
+
+            <p class="text-light opacity-75 flex-grow-1">
+                {{ movie.description }}
+            </p>
+
+            <div class="mb-3 text-light opacity-75">
+                <div>
+                    <strong>Release Date:</strong>
+                    {{ movie.release_date|date:"M d, Y" }}
+                </div>
+
+                <div>
+                    <strong>Duration:</strong>
+                    {{ movie.duration }} minutes
+                </div>
+            </div>
+
+            <a href="{% url 'book_seat' movie.id %}"
+               class="btn btn-primary w-100">
+                Book Seats
+            </a>
+
+        </div>
+    </div>
+
+    {% empty %}
+
+    <div class="col-12 text-center py-5">
+        <h3 class="text-white">No Movies Available</h3>
+        <p class="text-light opacity-75">
+            Check back soon for upcoming movies!
+        </p>
+    </div>
+
+    {% endfor %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,68 @@
+
+{% extends 'bookings/base.html' %}
+
+{% block title %}My Bookings | CinemaBooking{% endblock %}
+
+{% block content %}
+
+<!-- Page heading -->
+<div class="mb-5">
+    <h1 class="display-5 fw-bold">My Bookings</h1>
+    <p class="text-light opacity-75">
+        View your movie reservations.
+    </p>
+</div>
+
+<!-- Display all reservations -->
+<div class="row g-4">
+    {% for booking in bookings %}
+    <div class="col-md-6">
+        <div class="movie-card p-4">
+
+            <!-- Movie title -->
+            <h3 class="text-white fw-bold">
+                {{ booking.movie.title }}
+            </h3>
+
+            <span class="badge bg-success mb-3">
+                Confirmed
+            </span>
+
+            <!-- Reservation details -->
+            <p class="text-light mb-2">
+                <strong>Seat:</strong>
+                {{ booking.seat.seat_number }}
+            </p>
+
+            <p class="text-light mb-2">
+                <strong>Duration:</strong>
+                {{ booking.movie.duration }} minutes
+            </p>
+
+            <p class="text-light mb-0">
+                <strong>Booked:</strong>
+                {{ booking.booking_date|date:"M d, Y g:i A" }}
+            </p>
+
+        </div>
+    </div>
+
+    {% empty %}
+
+    <!-- No bookings found -->
+    <div class="col-12 text-center py-5">
+        <h3>No Bookings Yet</h3>
+        <p class="text-light opacity-75">
+            You haven't reserved any movie seats.
+        </p>
+
+        <a href="{% url 'movie_list' %}"
+           class="btn btn-primary mt-3">
+            Browse Movies
+        </a>
+    </div>
+
+    {% endfor %}
+</div>
+
+{% endblock %}

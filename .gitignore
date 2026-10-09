@@ -1,28 +1,97 @@
+
+# ==========================================
+# CS4300 - Git Ignore
+# ==========================================
+
 # Python virtual environments
 .venv/
 venv/
-myenv/
+env/
+ENV/
 
-# Python cache
+# Python cache files
 __pycache__/
-*.pyc
-.pytest_cache/
-.coverage
-htmlcov/
+*.py[cod]
+*$py.class
 
-# Django
+# Python build files
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Django local database
 db.sqlite3
+db.sqlite3-journal
+*.sqlite3-journal
+
+# Django static and media files
+staticfiles/
+media/
+
+# Django logs
 *.log
 
-# Environment variables
-.env
+# Testing and coverage
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+.tox/
+.nox/
+coverage.xml
+junit.xml
 
-# macOS
-.DS_Store
+# Behave testing output
+behave_reports/
 
-# IDE files
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# VS Code
 .vscode/
+*.code-workspace
+
+# PyCharm and IntelliJ
 .idea/
 
-# Local submission archives
+# macOS files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+
+# Archives
 *.zip
+*.tar
+*.tar.gz
+
+# Local configuration files
+local_settings.py
+settings_local.py
+
+# Python type checking and linting
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.dmypy.json
+.pytype/
+
+# Pip cache
+.pip-cache/
