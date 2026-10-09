@@ -2,6 +2,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from bookings.views import movie_list, book_seat, booking_history
+from bookings.views import SignUpView
 
 urlpatterns = [
     # Django admin dashboard
@@ -20,6 +21,7 @@ urlpatterns = [
     path('', movie_list, name='movie_list'),
     path('movies/<int:movie_id>/book/', book_seat, name='book_seat'),
     path('history/', booking_history, name='booking_history'),
+    path('accounts/signup/', SignUpView.as_view(), name='signup'),
 ]
 
 

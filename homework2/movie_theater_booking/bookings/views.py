@@ -1,21 +1,16 @@
 from rest_framework import viewsets, permissions
 from rest_framework.exceptions import PermissionDenied
-from django.shortcuts import render
-from django.http import HttpResponse
+
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.db import IntegrityError, transaction
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 
 from .models import Movie, Seat, Booking
-from .serializers import (
-    MovieSerializer,
-    SeatSerializer,
-    BookingSerializer
-)
+from .serializers import MovieSerializer, SeatSerializer, BookingSerializer
 
 
 class MovieViewSet(viewsets.ModelViewSet):
