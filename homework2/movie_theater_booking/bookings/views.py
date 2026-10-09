@@ -6,6 +6,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db import IntegrityError, transaction
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.forms import UserCreationForm
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
 
 from .models import Movie, Seat, Booking
 from .serializers import (
@@ -134,3 +137,8 @@ def booking_history(request):
         'bookings/booking_history.html',
         {'bookings': bookings}
     )
+
+class SignUpView(CreateView):
+    form_class = UserCreationForm
+    template_name = "registration/signup.html"
+    success_url = reverse_lazy("login")
